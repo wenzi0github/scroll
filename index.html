@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>滚动检测</title>
+<style type="text/css">
+*{margin:0; padding: 0} 
+.clearflx{clear: both; zoom: 1;}
+a{text-decoration: none;}
+
+.content {position: relative; width: 900px; margin:0 auto;} 
+.content ul li{ float: left; list-style: none; width: 80px; height: 30px; line-height: 30px; text-align: center; border: 1px solid #CCC; margin: 0 10px;} 
+/* 简介 */
+.brief{height: 500px; border: 1px solid #CCC;}
+
+/* 顶部导航 */
+.nav{padding: 10px 0; background: #eeffee;}
+.nav .hover{background: #8B2252;color: #fff;font-weight: bold;} 
+.navfix{display: none; position: fixed;top: 0; left: 0; width: 100%; background: #000;color: #fff; z-index: 999; }
+.navfix .nav_bar{width: 900px; margin:0 auto;}
+.navfix a{color: #fff; display: block;}
+.nav a{color: #000; display: block;}
+.navfix a:hover, .nav a:hover{color: #f00; background: #fff;}
+.navfix .hover a{color: #f00; background: #fff; display: block;}
+
+/* 侧边数字导航 */
+.nav_step{width: 32px;position: fixed;left: 50%;margin-left: -464px;top: 35px; z-index: 999;}
+.nav_step a{width: 32px;height: 32px;border-radius: 20px;background-color: #008B00;text-align: center;line-height: 32px;color: #fff;font-weight: 700;left: -16px;top: -16px; visibility: hidden; display: block;}
+.nav_step a:hover{background-color: #008B00;}
+
+/* 内容 */
+.list{margin-top: 45px;}
+.list .item{height: 500px; border-left: 2px dotted #e4e4e4; border-top: 1px solid #f00; margin-top: 20px; padding: 35px 0 0 40px; position: relative;}
+.item .item-icon{position: absolute;width: 32px;height: 32px;background-color: #008B00;border-radius: 20px;text-align: center;line-height: 32px;color: #fff;font-weight: 700;left: -16px;top: -16px;}
+.footer{height: 300px; border: 1px solid #CCC;}
+
+/* 底部说明 */
+div.copyright{min-width:990px;background-color:#375069;text-align:center}
+.copyright textarea{display:none}
+div.copyright div.copyright-logo{padding-top:10px}
+div.copyright div.copyright-logo span.foot-icon{margin:0 auto;position:relative;width:200px;height:40px;line-height:40px;display:block;text-align:left}
+div.copyright div.copyright-logo span.foot-icon img{cursor:pointer}
+div.copyright div.copyright-logo span.foot-icon #foot-icon{width:32px;height:32px}
+div.copyright div.copyright-logo span.foot-icon #foot-icon.over{position:absolute;top:-10px;left:135px;width:90px;height:90px}
+div.copyright div.copyright-logo ul{margin:0 auto;padding:0;display:table;vertical-align:middle;list-style-type:none;width:240px;text-align:center}
+div.copyright div.copyright-logo ul li{float:left;width:80px;color:#b0b8bd;font-size:12px}
+div.copyright p{font-size:12px;color:#b0b8bd;margin:0;padding-bottom:10px}
+div.copyright div#page-go-top{position:fixed;width:32px;height:110px;z-index:10;white-space:nowrap;text-indent:100%;overflow:hidden}
+
+
+/* 回到顶部 */
+.backtotop{position: fixed;left: 50%;margin-left: 500px;bottom: 100px; display: none;}
+.backtotop a{display: block;width: 38px;height: 38px;background-color: #CCC;border-radius: 4px; position: relative; cursor: pointer; opacity: 1;}
+.backtotop a:hover{opacity: 0.8;}
+.backtotop div{position: absolute; left: 0; right: 0; margin: auto;}
+.backtotop .arrow{width: 0;height: 0;top: -1px;border: 9px solid transparent;border-bottom-color: #aaa;}
+.backtotop .stick{width: 8px;height: 14px;background-color: #aaa;top: 15px;border-radius: 1px;}
+</style>
+</head>
+<body>
+    <div class="main">
+        <div class="content">
+            <div class="brief">
+                简介
+            </div>
+            <div class="navfix">
+                <div id="nav_bar" class="nav_bar"></div>
+            </div>
+            <div id="nav" class="nav">
+                <ul>
+                    <li><a href="#aaaa">aaaa</a></li>
+                    <li><a href="#bbbb">bbbb</a></li>
+                    <li><a href="#cccc">cccc</a></li>
+                    <li><a href="#dddd">dddd</a></li>
+                    <div class="clearflx"></div>
+                </ul>
+            </div>
+            <div id="nav_step" class="nav_step">
+            	<div>
+            		<a href="#aaaa">1</a>
+                   	<a href="#bbbb">2</a>
+                   	<a href="#cccc">3</a>
+                   	<a href="#dddd">4</a>
+				</div>
+            </div>
+            <div class="list">
+                <div id="aaaa" class="item">
+                    <div class="item-icon">1</div>
+                    <div>
+                    	aaaa
+                    </div>
+                </div>
+                <div id="bbbb" class="item">
+                    <div class="item-icon">2</div>
+                    <div>
+                    	bbbb
+                    </div>
+                </div>
+                <div id="cccc" class="item">
+                    <div class="item-icon">3</div>
+                    <div>
+                    	cccc
+                    </div>
+                </div>
+                <div id="dddd" class="item">
+                    <div class="item-icon">4</div>
+                    <div>
+                    	dddd
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                底部
+            </div>
+        </div> 
+    </div>
+    <div id="copyright" class="copyright">
+	    <textarea >
+	    	<div class="copyright-logo">
+		        <span class="foot-icon">
+		            <img src="https://sae.sina.com.cn/static/image/home/copyright_logo.png">
+		            <a href="http://www.dca.org.cn/" target="_blank">
+		            <img id="foot-icon" width="32" height="32" src="https://sae.sina.com.cn/static/image/home/foot-icon.png" class="">
+		        </a>
+		        </span>
+		        <ul>
+		            <li>对象存储服务<br>NO:02005</li>
+		            <li>云数据库服务<br>NO:03006</li>
+		            <li>云引擎服务<br>NO:04001</li>
+		        </ul>
+		    </div>
+		    <p>Copyright © 1996-2014 SINA Corporation All Rights Reserved</p>
+	    </textarea>
+	</div>
+    <div id="backtotop" class="backtotop">
+    	<a href="javascript:;">
+    		<div class="arrow"></div>
+    		<div class="stick"></div>
+    	</a>
+    </div>
+</body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript"> 
+$(function() {
+    $("#nav_bar").html($('#nav').html());
+
+    var $li = $(".navfix li"),
+        $item = $(".list .item"),
+        $step_a = $("#nav_step a");
+        $backtotop = $("#backtotop"),
+        $copyright = $("#copyright");
+        num = 0,
+        listTop = [],
+        copyTop = $copyright.offset().top;
+
+    // 获取每个item距顶部的高度
+    $item.each(function(index, el) {
+        listTop.push($(el).offset().top);
+    });
+
+    // 滚动事件
+    $(window).on('scroll', function(event) {
+        var winTop = $(this).scrollTop(),
+            i = 1,
+            k = -1,
+            t = listTop.length;
+        
+        // 是否显示顶部导航
+        winTop < listTop[0] ? $(".navfix").hide() : $(".navfix").show();
+
+        // 检测所在区域
+        for (; i < t; i++) {
+        	if ( winTop > listTop[t-1] ) {
+        		k = t-1;
+        		break;
+        	}else if ( (winTop>=listTop[i-1] && winTop < listTop[i]) || (winTop > listTop[t-1]) ) {
+                k = i-1;
+                break;
+            }
+        }
+
+        // 切换效果
+        if( k > -1 ){
+            // 顶部导航
+            $li.removeClass('hover');
+            $li.eq(k).addClass('hover');
+        }
+
+        // 侧边数字导航
+        $item.find(".item-icon").show();
+        $step_a.css('visibility', 'hidden');
+        for(i=0; i<t; i++){
+        	if(listTop[i]-winTop<i*32+35){
+        		$item.eq(i).find(".item-icon").hide();
+        		$step_a.eq(i).css({'visibility':'visible', 'background-color': (i<k?'#888':'#008B00') });
+        	}
+        }
+
+        // 懒加载底部内容
+        var winHei = $(this).height();
+        if( $copyright.attr("loaded")!="loaded" && (winTop+winHei+500 > copyTop)){
+        	var text = $copyright.find('textarea').val();
+        	$copyright.html(text);
+
+        	$copyright.attr("loaded", "loaded");
+        }
+
+        // 是否显示“回到顶部”
+        winTop > 100 ? $backtotop.fadeIn() : $backtotop.fadeOut();
+
+        event.preventDefault();
+    });
+
+	// 回到顶部
+    $("#backtotop").on('click', function(event) {
+    	event = event || window.event;
+
+    	var winTop = $(window).scrollTop();
+    	$('body').animate({scrollTop:0}, winTop/4);
+
+    	event.preventDefault();
+    });
+})
+</script>
+</html>
