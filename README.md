@@ -7,16 +7,8 @@ ajax异步加载，加快页面首次加载的速度
 “回到顶部”功能
  
 
-　　这两天做了一个demo，大家可以参考一下：页面滚动效果
-
-　　
-
-　　
-
- 　　上图中指出了用滚动事件实现的功能，不过demo中没有实现异步加载的功能，其实懒加载和异步加载的原理差不多，只不过一个是先把数据请求了只是不加载，一个是滚动到位置了才用ajax请求数据。
-
- 
-
+ 　　本项目中用滚动事件实现了：懒加载，顶部导航焦点追踪，侧边数字导航和“回到顶部”功能，不过demo中没有实现异步加载的功能，其实懒加载和异步加载的原理差不多，只不过一个是先把数据请求了只是不加载，一个是滚动到位置了才用ajax请求数据。
+ 　　
 　　在这里我讲一下这些功能的实现方式：
 
 　　1. 顶部导航的焦点追踪
@@ -42,7 +34,7 @@ winTop>=listTop[0] && winTop<listTop[1] : 在区域aaaa
 winTop>=listTop[1] && winTop<listTop[2] : 在区域bbbb
 winTop>=listTop[2] && winTop<listTop[3] : 在区域ccccc
 inTop>=listTop[3] : 在区域dddd
-复制代码
+
 // 检测所在区域
 for (; i < t; i++) {
     if ( winTop > listTop[t-1] ) {
@@ -59,7 +51,6 @@ if( k > -1 ){
     $li.removeClass('hover');
     $li.eq(k).addClass('hover');
 }
-复制代码
  
 
 　　k默认的是-1，即不在任何区域，若k>-1即肯定处在某个区域内，先清除导航中所有元素的样式，然后再指定样式
@@ -72,7 +63,6 @@ if( k > -1 ){
 
 　　这里的重点是计算出什么时候隐藏导航A中的数字，显示导航B中的数字，而且导航B的数字显示什么颜色：每次滚动时，都首先让导航A中的数字显示，导航B的数字隐藏，然后计算每个区域所在的位置，如果某个区域距顶部的高度与滚动条的高度小于了导航B的数字的高度，就说明导航A中的数字该隐藏，导航B的数字该显示了；那显示的数字呈现什么颜色呢，刚才我们计算出了当前所在区域的编号K，那么区域编号小于编号K都是已经看过的，就显示灰色，否则就是正在看或者没看的区域就显示绿色。
 
-复制代码
 // 侧边数字导航
 $item.find(".item-icon").show();    // 跟着区域移动的数字
 $step_a.css('visibility', 'hidden');// 固定导航的数字
@@ -82,16 +72,12 @@ for(i=0; i<t; i++){
         $step_a.eq(i).css({'visibility':'visible', 'background-color': (i<k?'#888':'#008B00') });
     }
 }
-复制代码
- 
 
- 
 
 　　3. 懒加载
 
 　　通常加载DOM元素时需要对页面进行渲染，耗费时间，那么我们就先把这些DOM元素存储起来，等需要加载的时候再去加载，用来加快页面初始的加载；img图片同理。
 
-复制代码
 // 懒加载底部内容
 if( $copyright.attr("loaded")!="loaded" && (winTop+800 > copyTop)){
     var text = $copyright.find('textarea').val();
@@ -99,7 +85,6 @@ if( $copyright.attr("loaded")!="loaded" && (winTop+800 > copyTop)){
 
     $copyright.attr("loaded", "loaded");
 }
-复制代码
  
 
  
@@ -112,7 +97,6 @@ if( $copyright.attr("loaded")!="loaded" && (winTop+800 > copyTop)){
 
 　　“回到顶部”功能，即将scrollTop的值设置为0的过程，如果需要缓冲效果，那么就给它一个缓冲时间
 
-复制代码
 // 回到顶部
 $("#backtotop").on('click', function(event) {
     event = event || window.event;
@@ -122,9 +106,6 @@ $("#backtotop").on('click', function(event) {
 
     event.preventDefault();
 });
-复制代码
- 
-
  
 
 　　5. 其他
